@@ -7,7 +7,9 @@
         public string Body { get; set; }
         public string Author { get; set; }
 
-        //public Note() { }
+        public DateTime LastUpdated { get; set; }
+
+        public string Colour { get; set; }
 
     }
 }

@@ -23,6 +23,10 @@ namespace NotesApp
                 app.UseSwaggerUI();
             }
 
+            //Added to access html
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
