@@ -91,6 +91,7 @@ namespace NotesApp.Controllers
         {
 
             newNote.Id = Guid.NewGuid();
+            newNote.LastUpdated = DateTime.Now;
 
             try
             {
