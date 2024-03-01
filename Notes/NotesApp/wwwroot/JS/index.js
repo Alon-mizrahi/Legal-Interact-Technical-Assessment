@@ -9,64 +9,64 @@ window.onload = () => {
         CreateNote();
     });
 
-    //Testing url params
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
-
-    console.log("urlParams", urlParams);
-    console.log("productId", productId);
-
-    //console.log(createForm);
-
-    //for testing
+    //Populate Notes
     FetchAllNotes();
-
 };
 
 
 
 
 async function FetchAllNotes() {
-    let data = await fetch("/Notes", { //https://localhost:7224/Notes
+
+    let data = await fetch("/notes", {
         method: "GET"
     });
 
     let response = await data.json();
 
-    console.log(response);
-
-    
     let date
     let formattedDate;
-
 
     let year;
     let month;
     let dt;
     let time;
 
-    response.forEach((note) => {
-
-        date = new Date(note.lastUpdated);
-
-        year = date.getFullYear();
-        month = date.getMonth() + 1;
-        dt = date.getDate();
-        time = date.getHours() + ":" + date.getMinutes();
+    
 
 
-        if (dt < 10) {
-            dt = '0' + dt;
-        }
-        if (month < 10) {
-            month = '0' + month;
-        }
+    if (response.length == 0) {
 
-        formattedDate = year + "/" + month + "/" + dt + " " + time;
+    const noData = document.createElement('h2');
+    noData.innerText = "No Notes Created Yet. Add a New Note!";
+    const container = document.getElementById('notes-container');
+    container.appendChild(noData);
 
+    } else {
+        response.forEach((note) => {
 
-        CreateNoteElement(note.title, note.body, note.author, formattedDate);
-    });
+            //Formate Date YYYY/MM/DD HH:Mi
+            date = new Date(note.lastUpdated);
+
+            year = date.getFullYear();
+            month = date.getMonth() + 1;
+            dt = date.getDate();
+            time = date.getHours() + ":" + date.getMinutes();
+
+            if (dt < 10) {
+                dt = '0' + dt;
+            }
+            if (month < 10) {
+                month = '0' + month;
+            }
+
+            formattedDate = year + "/" + month + "/" + dt + " " + time;
+
+            //Create html Card Element for each Note
+            CreateNoteElement(note.title, note.body, note.author, formattedDate, note.colour, note.id);
+        });
+
+    }
 
 }
 
@@ -75,13 +75,12 @@ async function CreateNote() {
     let title = document.getElementById("title");
     let body = document.getElementById("body");
     let name = document.getElementById("name");
-    let colour = document.getElementById("colour");
-
+    let colour = document.querySelector('input[name = colour]:checked');
 
 
     const data = {
         title: title.value,
-        body: body.value,
+        body: body.value.trim(),
         author: name.value,
         colour: colour.value,
     };
@@ -123,16 +122,21 @@ function clicked() {
 
 
 
-function CreateNoteElement(title, body, author, date) {
+function CreateNoteElement(title, body, author, date, colour, id) {
 
-    console.log(date);
+    //console.log(date);
 
     // Create elements and set their content
     const colDiv = document.createElement('div');
     colDiv.classList.add('col');
 
+
+    const cardLink = document.createElement('a');
+    cardLink.href = "/note?id=" + id;
+
     const cardDiv = document.createElement('div');
     cardDiv.classList.add('card');
+    //cardDiv.classList.add('colour1');
 
     const cardBodyDiv = document.createElement('div');
     cardBodyDiv.classList.add('card-body');
@@ -143,7 +147,9 @@ function CreateNoteElement(title, body, author, date) {
 
     const bodyElement = document.createElement('p');
     bodyElement.classList.add('card-text', 'text-start');
-    bodyElement.textContent = body;
+    body = body.replace("\n", "<br/>");
+    //bodyElement.textContent = body;
+    bodyElement.innerHTML = body;
 
     const footerElement = document.createElement('footer');
     footerElement.classList.add('blockquote-footer');
@@ -162,7 +168,10 @@ function CreateNoteElement(title, body, author, date) {
 
     cardDiv.appendChild(cardBodyDiv);
 
-    colDiv.appendChild(cardDiv);
+
+    cardLink.appendChild(cardDiv);
+
+    colDiv.appendChild(cardLink);
 
     // Get a reference to the container element
     const container = document.getElementById('notes-container');

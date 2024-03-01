@@ -51,63 +51,54 @@
             </div>
                 
 
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">New Note</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-
-
-                                <form id="CreateForm">
-                                    <div class="mb-3">
-                                        <label for="title" class="form-label">Title</label>
-                                        <input type="text" class="form-control" id="title" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="body" class="form-label">Body</label>
-                                        <textarea type="text"
-                                                  class="form-control"
-                                                  id="body"
-                                                  rows={10}
-                                                  maxlength="350"
-                                                 
-                                                  required>
-                                        </textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Your Name</label>
-                                        <input type="text" class="form-control" id="name">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="colour" class="form-label">Colour</label>
-                                        <input type="color" class="form-control" id="colour">
-                                    </div>
-                                    <div class="mb-3" >
-                                        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked >
-                                        <label class="btn btn-outline" for="option1" style="color:red">Red</label>
-
-                                        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
-                                        <label class="btn btn-outline" for="option2" style="color:yellow">Yellow</label>
-
-                                        <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off">
-                                        <label class="btn btn-outline" for="option3" style="color:green">Green</label>
-
-                                    </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Create Note</button>
-                                        </div>
-
-                                </form>
-                            </div>
-                        
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">New Note</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <div class="modal-body">
+
+
+                            <form id="CreateForm">
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input type="text" class="form-control" id="title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="body" class="form-label">Body</label>
+                                    <textarea type="text"
+                                                class="form-control"
+                                                id="body"
+                                                rows={10}
+                                                maxlength="350"
+                                                required>
+                                    </textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" id="name">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="colour" class="form-label">Colour</label>
+                                    <input type="radio" class="" name="colour" id="option0" autocomplete="off" checked>
+                                    <input type="radio" class="" name="colour" id="option1" autocomplete="off">
+                                    <input type="radio" class="" name="colour" id="option2" autocomplete="off">
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Create Note</button>
+                                </div>
+
+                            </form>
+                        </div>
+                        
                     </div>
+                </div>
             </div>
 
 

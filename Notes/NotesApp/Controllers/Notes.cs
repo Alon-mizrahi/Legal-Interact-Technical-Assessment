@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NotesApp.Models.Entities;
-using System.Collections.Generic;
 using System.Text.Json;
 
 /// This Controler is used to Handle the CRUD operations 
@@ -9,7 +8,7 @@ using System.Text.Json;
 namespace NotesApp.Controllers
 {
     [ApiController]             //Indicate no views
-    [Route("/[controller]")]    //specify the route used to reach this conbtroller
+    [Route("/notes")]    //specify the route used to reach this conbtroller
     public class Notes : Controller
     {
 
@@ -51,7 +50,7 @@ namespace NotesApp.Controllers
 
     //Fetch a Single Note
         [HttpGet]
-        [Route("/{id:Guid}")]
+        [Route("/notes/{id:Guid}")]
         [ActionName("GetNote")]
         public IActionResult GetNote(Guid id) //id param must match route param
         {
@@ -115,17 +114,25 @@ namespace NotesApp.Controllers
 
     //Update Existing Note
         [HttpPut]
-        [Route("/{id:Guid}")]
+        [Route("/notes/update/{id:Guid}")]
         public IActionResult UpdateNote(Guid id, Note updatedNote)
         {
+            Note oldNote;
             try
             {
                 List<Note> allNotes = ReadJsonData();
 
                 // Add the new data to the list
-               Note oldNote = allNotes.Find(x => x.Id == id);
+                if(allNotes.Count != 0)
+                {
+                    oldNote = allNotes.Find(x => x.Id == id);
+                }
+                else {
+                    return NotFound();
+                }
 
-                if(oldNote == null)
+
+                if (oldNote == null)
                 {
                     return NotFound();
                 }
@@ -149,7 +156,7 @@ namespace NotesApp.Controllers
 
     //Delete Existing Note
         [HttpDelete]
-        [Route("/{id:Guid}")]
+        [Route("/notes/delete/{id:Guid}")]
         public IActionResult DeleteNote(Guid id)
         {
             try
