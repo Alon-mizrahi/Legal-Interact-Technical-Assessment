@@ -12,6 +12,7 @@
 
         <link href="./CSS/index.css" rel="stylesheet">
         <script src="./JS/index.js" type="text/javascript"></script>
+        <script src="./JS/viewNote.js" type="text/javascript"></script>
     </head>
 
     <body class="text-center">
@@ -21,17 +22,16 @@
             <ul class="nav justify-content-end">
                 <li class="nav-item">
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" onclick="clicked()" checked>
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Dark Mode</label>
+                        <input class="form-check-input" type="checkbox" id="theme-switch" onclick="handleChangeTheme()">
+                        <label class="form-check-label" for="theme-switch">Dark Mode</label>
                     </div>
                 </li>
                 <li class="nav-item">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-modal">
                         Create New Note
                     </button>
                 </li>
-
             </ul>
 
             <h1>ASP .Net Core Notes Application</h1>
@@ -41,69 +41,139 @@
         </header>
 
         <main>
-
-
+            <form id="SearchForm">
+                <div class="input-group mb-3">
+                    <button class="btn btn-outline-secondary" type="button" id="button-search">Search</button>
+                    <input id="search-tags" type="text" class="form-control" placeholder="Search Tags">
+                </div>
+            </form>
             <div class="container">
                 <div id="notes-container" class="row row-cols-auto gy-4">
                     <!-- All Notes Render Here-->
-
                 </div>
             </div>
-                
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">New Note</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!-- Create Note Modal -->
+                <div class="modal fade" id="create-modal" tabindex="-1" aria-labelledby="create-modal" aria-hidden="true">
+                    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">New Note</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <form id="CreateForm">
+                                    <div class="mb-3 text-start">
+                                        <label for="title" class="form-label">Title</label>
+                                        <input type="text" class="form-control" id="title" required>
+                                    </div>
+                                    <div class="mb-3 text-start">
+                                        <label for="body" class="form-label">Body</label>
+                                        <textarea type="text"
+                                                  class="form-control"
+                                                  id="body"
+                                                  rows="5"
+                                                  maxlength="350"
+                                                  required></textarea>
+                                    </div>
+                                    <div class="mb-3 text-start">
+                                        <label for="name" class="form-label" required>Your Name</label>
+                                        <input type="text" class="form-control" id="name">
+                                    </div>
+
+                                    <!--
+                            <div class="mb-3">
+                                <label for="colour" class="form-label">Colour</label>
+                                <input type="radio" class="form-control color-radio-0" name="colour" id="option0" autocomplete="off" value="" checked>
+                                <input type="radio" class="form-control color-radio-1" name="colour" id="option1" autocomplete="off" value="">
+                                <input type="radio" class="form-control color-radio-2" name="colour" id="option2" autocomplete="off" value="">
+                            </div>
+                                -->
+                                    <div class="mb-3 text-start">
+                                        <label for="tags" class="form-label">Tags</label>
+                                        <input type="text" class="form-control" id="tags">
+                                        <div id="tagHelpBlock" class="form-text">
+                                            Enter comma(,) seperated values.
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Create Note</button>
+                                    </div>
+
+                                </form>
+                            </div>
+
                         </div>
-                        <div class="modal-body">
-
-
-                            <form id="CreateForm">
-                                <div class="mb-3">
-                                    <label for="title" class="form-label">Title</label>
-                                    <input type="text" class="form-control" id="title" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="body" class="form-label">Body</label>
-                                    <textarea type="text"
-                                                class="form-control"
-                                                id="body"
-                                                rows={10}
-                                                maxlength="350"
-                                                required>
-                                    </textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Your Name</label>
-                                    <input type="text" class="form-control" id="name">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="colour" class="form-label">Colour</label>
-                                    <input type="radio" class="" name="colour" id="option0" autocomplete="off" checked>
-                                    <input type="radio" class="" name="colour" id="option1" autocomplete="off">
-                                    <input type="radio" class="" name="colour" id="option2" autocomplete="off">
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Create Note</button>
-                                </div>
-
-                            </form>
-                        </div>
-                        
                     </div>
                 </div>
-            </div>
+
+                <!-- Update Note Modal -->
+                <div class="modal fade" id="update-modal" tabindex="-1" aria-labelledby="update-modal" aria-hidden="true">
+                    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="update-modal-label">Update Note</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="view-form">
+                                    <div class="mb-3 text-start">
+                                        <label for="view-title" class="form-label">Title</label>
+                                        <input type="text" class="form-control" id="view-title" required>
+                                    </div>
+                                    <div class="mb-3 text-start">
+                                        <label for="view-body" class="form-label">Body</label>
+                                        <textarea type="text"
+                                                  class="form-control"
+                                                  id="view-body"
+                                                  rows=5
+                                                  maxlength="350"
+                                                  required></textarea>
+                                    </div>
+
+                                    <div class="mb-3 text-start">
+                                        <label for="view-tags" class="form-label">Tags</label>
+                                        <input type="text" class="form-control" id="view-tags">
+                                        <div id="viewtagHelpBlock" class="form-text">
+                                            Enter comma(,) seperated values.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 text-start">
+                                        <label for="view-name" class="form-label">Author</label>
+                                        <input type="text" class="form-control" id="view-name" disabled>
+                                    </div>
+
+                                    <div class="mb-3 text-start">
+                                        <label for="view-date" class="form-label">Last Updated</label>
+                                        <input disabled type="datetime" class="form-control" id="view-date">
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-danger" id="delete-button">Delete Note</button>
+                                        <button type="button" class="btn btn-outline-success" id="share-button" style="margin-left:10px;">Share Note</button>
+                                        <button type="button" class="btn btn-primary" style="margin-left:10px;" id="save-button">Save Changes</button>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
 
 
         </main>
 
     </body>
+
+    <button id="create-modal-toggle" style="display:none;" type="button" data-bs-toggle="modal" data-bs-target="#create-modal">
+    </button>
+
+    <button id="view-modal-toggle" style="display:none;" type="button" data-bs-toggle="modal" data-bs-target="#update-modal">
+    </button>
 
 </html>

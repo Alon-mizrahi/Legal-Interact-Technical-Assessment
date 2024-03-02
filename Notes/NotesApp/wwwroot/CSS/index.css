@@ -1,8 +1,8 @@
-﻿body{
-    padding:30px;
+﻿body {
+    padding: 30px;
 }
 
-.form-label{
+.form-label {
     float: left;
 }
 
@@ -13,7 +13,7 @@
 
 
 
-.col{
+.col {
     width: 300px;
     height: 300px;
 }
@@ -23,34 +23,43 @@
     overflow: hidden;
 }
 
-.card-text{
-    overflow:hidden;
+.card {
+    transform: scale(1);
+    transition: 0.3s;
 }
 
+    .card:hover {
+        transform: scale(1.1);
+    }
 
+.card-text {
+    overflow: hidden;
+}
+
+#SearchForm{
+    width:50%;
+    margin: auto;
+}
+
+/*
 .colour1 {
     background-color: lightseagreen;
 }
+
 .colour2 {
     background-color: lightcoral;
 }
 
 
-
-
-
-a:link {
-    text-decoration: none;
+.color-radio-0{
+    accent-color: lightgray;
 }
 
-a:visited {
-    text-decoration: none;
+.color-radio-1 {
+    accent-color: lightseagreen;
 }
 
-a:hover {
-    text-decoration: none;
+.color-radio-2 {
+    accent-color: lightcoral;
 }
-
-a:active {
-    text-decoration: none;
-}
+*/

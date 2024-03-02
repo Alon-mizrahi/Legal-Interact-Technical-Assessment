@@ -142,6 +142,7 @@ namespace NotesApp.Controllers
                 oldNote.Body = updatedNote.Body;
                 oldNote.LastUpdated = DateTime.Now;
                 oldNote.Colour = updatedNote.Colour;
+                oldNote.Tags = updatedNote.Tags;
 
                 WriteDataToFile(allNotes);
 
