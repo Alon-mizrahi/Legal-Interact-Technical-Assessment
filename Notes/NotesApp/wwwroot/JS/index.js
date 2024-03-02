@@ -18,6 +18,16 @@ window.onload = () => {
         RefreshNotes(tags);
     });
 
+    let searchForm = document.getElementById("SearchForm");
+    searchForm.addEventListener("keydown", (e) => {
+        if (e.key == "Enter") {
+            e.preventDefault();
+            let tags = document.getElementById("search-tags").value;
+            RefreshNotes(tags);
+        }
+
+    });
+        
     //Check for theme coockie
     CheckTheme();
 
@@ -25,6 +35,8 @@ window.onload = () => {
     FetchAllNotes();
 
     Init();
+
+    window.history.pushState(null, null, "/");
 };
 
 //GET /notes
@@ -264,14 +276,82 @@ function ClearForms() {
 
 
 
-function FetchNotesByTag(tags) {
-    console.log("Tags", tags);
+async function FetchNotesByTag(tag) {
 
-    const noData = document.createElement('h4');
-    noData.classList.add("col-12");
-    noData.classList.add("mt-5");
-    noData.innerHTML = "No Notes with this Tag Were Found...<br/> Try Search for another Tag!";
-    const container = document.getElementById('notes-container');
-    container.classList.add("text-center");
-    container.appendChild(noData);
+    tag = tag.trim();
+    tag = tag.toLowerCase();
+    console.log("Tag", tag);
+
+
+    let url = "/notes/tag/" + tag;
+
+    try {
+        const data = await fetch(url, {
+            method: "GET",
+        });
+
+        console.log("DATA " + JSON.stringify(data) );
+
+        if (!data.ok) {
+            throw new Error(`${data.status} ${data.statusText}`);
+        }
+
+        let response = await data.json();
+
+
+        let date
+        let formattedDate;
+
+        let year;
+        let month;
+        let dt;
+        let time;
+
+        //Fallback for no notes created
+        if (response.length == 0) {
+
+            const noData = document.createElement('h4');
+            noData.classList.add("col-12");
+            noData.classList.add("mt-5");
+            noData.innerHTML = "No Notes with this Tag Were Found...<br/> Try Search for another Tag!";
+            const container = document.getElementById('notes-container');
+            container.classList.add("text-center");
+            container.appendChild(noData);
+
+        } else {
+            response.forEach((note) => {
+
+                //Formate Date YYYY/MM/DD HH:Mi
+                date = new Date(note.lastUpdated);
+
+                year = date.getFullYear();
+                month = date.getMonth() + 1;
+                dt = date.getDate();
+                time = date.getHours() + ":" + date.getMinutes();
+
+                if (dt < 10) {
+                    dt = '0' + dt;
+                }
+                if (month < 10) {
+                    month = '0' + month;
+                }
+
+                formattedDate = year + "/" + month + "/" + dt + " " + time;
+
+                //Create html Card Element for each Note
+                CreateNoteElement(note.title, note.body, note.author, formattedDate, note.colour, note.id);
+            });
+
+        }
+
+    } catch (error) {
+        console.log(error);
+        const noData = document.createElement('h4');
+        noData.classList.add("col-12");
+        noData.classList.add("mt-5");
+        noData.innerHTML = "No Notes with this Tag Were Found...<br/> Try Search for another Tag!";
+        const container = document.getElementById('notes-container');
+        container.classList.add("text-center");
+        container.appendChild(noData);
+    }
 }

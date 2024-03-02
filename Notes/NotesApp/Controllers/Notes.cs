@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NotesApp.Controllers;
 using NotesApp.Models.Entities;
 using System.Text.Json;
 
@@ -185,8 +186,68 @@ namespace NotesApp.Controllers
         }
 
 
+        //Fetch By Tag
+        [HttpGet]
+        [Route("/notes/tag/{tag}")]
+        public IActionResult FetchByTag(String tag)
+        {
+            try
+            {
 
-    //Read and Write Methods
+                List<Note> allNotes = ReadJsonData();
+
+                List<Note> FoundNotes = new List<Note>();
+                string found = null;
+
+
+                if(allNotes == null)
+                {
+                    return NotFound("Note Not Found");
+                }
+                else
+                {
+
+                    foreach(Note n in allNotes)
+                    {
+                        found = null;
+
+                        if(n.Tags != null)
+                        {
+                            found = n.Tags.Find(x => x.ToLower() == tag.ToLower());
+
+
+                            if(found != null)
+                            {
+                                FoundNotes.Add(n);
+                            }
+
+                        }
+                        
+                    }
+                    if(FoundNotes.Count != 0)
+                    {
+                        return Ok(FoundNotes);
+                    }
+                    else
+                    {
+                        return NotFound("Note Not Found");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error reading JSON file: {ex.Message}");
+            }
+
+        }
+
+
+
+
+
+
+        //Read and Write Methods
 
         private List<Note> ReadJsonData()
         {
