@@ -20,8 +20,8 @@ The app allows a user to create and store notes for easy access and sharing.
 
 ## Technologies Used
 
-- Backend: ASP.NET Core, C#
-- Frontend: HTML5, JavaScript (Vanilla), Bootstrap
+- Backend: ASP.NET v8.0 Core, C#
+- Frontend: HTML5, JavaScript (Vanilla), Bootstrap v5.3.3
 
 
 ## Installation
