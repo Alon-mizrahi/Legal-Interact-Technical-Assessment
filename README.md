@@ -27,9 +27,38 @@ The app allows a user to create and store notes for easy access and sharing.
 ## Installation
 
 To run this project locally, follow these steps:
-1. First item
-2. Second item
 
+1. To run this project you will need the .Net SDK. If you have the SDK skip to point 5.
+2. Visit [Microsoft Download Centre](https://learn.microsoft.com/en-us/dotnet/core/install/windows?tabs=net80)
+3. Choose the appropriate download option based on your operating system and architecture.
+4. Follow the installation instructions provided.
+
+
+5. Clone or download and unzip this repository.
+6. Open up a terminal.
+7. Navigate to ...\Legal Interact Assesment\Legal-Interact-Technical-Assesment\Notes
+
+```shell
+cd ...\Legal Interact Assesment\Legal-Interact-Technical-Assesment\Notes
+```
+8. Restore and build the project.
+
+```shell
+dotnet restore
+
+dotnet build
+```
+
+9. Run the project.
+```shell
+dotnet run --project NotesApp
+```
+
+10. Open a browser window and enter the localhost URL specified by the response
+```shell
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5071
+```
 
 ## Future Features
 
