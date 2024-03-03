@@ -34,20 +34,21 @@
                 </li>
             </ul>
 
-            <h1>ASP .Net Core Notes Application</h1>
+            <h1>ASP.Net Core Notes Application</h1>
             <p class="text-body-secondary">
                 This Project was created by Alon Mizrahi for Legal Interact.
             </p>
         </header>
 
         <main>
-            <form id="SearchForm">
-                <div class="input-group mb-3">
-                    <button class="btn btn-outline-secondary" type="button" id="button-search">Search</button>
-                    <input id="search-tags" type="text" class="form-control" placeholder="Search Tags">
-                </div>
-            </form>
+            
             <div class="container">
+                <form id="search-form">
+                    <div class="input-group mb-3">
+                        <button class="btn btn-outline-secondary" type="button" id="button-search">Search</button>
+                        <input id="search-tags" type="text" class="form-control" placeholder="Search Tags">
+                    </div>
+                </form>
                 <div id="notes-container" class="row row-cols-auto gy-4">
                     <!-- All Notes Render Here-->
                 </div>
@@ -64,7 +65,7 @@
                             </div>
 
                             <div class="modal-body">
-                                <form id="CreateForm">
+                                <form id="create-form">
                                     <div class="mb-3 text-start">
                                         <label for="title" class="form-label">Title</label>
                                         <input type="text" class="form-control" id="title" required>
@@ -154,7 +155,7 @@
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-danger" id="delete-button">Delete Note</button>
-                                        <button type="button" class="btn btn-outline-success" id="share-button" style="margin-left:10px;">Share Note</button>
+                                        <button type="button" class="btn btn-outline-success" id="share-button" style="margin-left:10px;">Copy Note URL</button>
                                         <button type="button" class="btn btn-primary" style="margin-left:10px;" id="save-button">Save Changes</button>
                                     </div>
 

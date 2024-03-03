@@ -20,7 +20,6 @@
 
 .card {
     height: 100%;
-    overflow: hidden;
 }
 
 .card {
@@ -28,12 +27,18 @@
     transition: 0.3s;
 }
 
-    .card:hover {
-        transform: scale(1.1);
-    }
+.card:hover {
+    transform: scale(1.1);
+}
+
+
+.card-body {
+    max-height: 100%;
+}
 
 .card-text {
-    overflow: hidden;
+    overflow: auto;
+    max-height: 70%;
 }
 
 #SearchForm{

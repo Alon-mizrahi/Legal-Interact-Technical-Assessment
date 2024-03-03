@@ -186,7 +186,7 @@ namespace NotesApp.Controllers
         }
 
 
-        //Fetch By Tag
+    //Fetch By Tag
         [HttpGet]
         [Route("/notes/tag/{tag}")]
         public IActionResult FetchByTag(String tag)
@@ -213,7 +213,7 @@ namespace NotesApp.Controllers
 
                         if(n.Tags != null)
                         {
-                            found = n.Tags.Find(x => x.ToLower() == tag.ToLower());
+                            found = n.Tags.Find(x => x.Trim().ToLower() == tag.Trim().ToLower());
 
 
                             if(found != null)
@@ -244,10 +244,7 @@ namespace NotesApp.Controllers
 
 
 
-
-
-
-        //Read and Write Methods
+    //Read and Write Methods
 
         private List<Note> ReadJsonData()
         {

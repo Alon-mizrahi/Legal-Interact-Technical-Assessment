@@ -1,15 +1,13 @@
 ﻿//Dedicated to handeling the Fetching of all notes, and
 //The creation of new notes.
 
-
-
 window.onload = () => {
 
-    let createForm = document.getElementById("CreateForm");
+    let createForm = document.getElementById("create-form");
     createForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        console.log("SUBMIT TRIGGERED");
-        CreateNote();
+        console.log("Create Note Submitted");
+        HandleCreateNote();
     });
 
     let searchButton = document.getElementById("button-search");
@@ -18,14 +16,13 @@ window.onload = () => {
         RefreshNotes(tags);
     });
 
-    let searchForm = document.getElementById("SearchForm");
+    let searchForm = document.getElementById("search-form");
     searchForm.addEventListener("keydown", (e) => {
         if (e.key == "Enter") {
             e.preventDefault();
             let tags = document.getElementById("search-tags").value;
             RefreshNotes(tags);
         }
-
     });
         
     //Check for theme coockie
@@ -34,9 +31,7 @@ window.onload = () => {
     //Populate Notes
     FetchAllNotes();
 
-    Init();
-
-    window.history.pushState(null, null, "/");
+    InitViewNote();
 };
 
 //GET /notes
@@ -105,7 +100,7 @@ async function FetchAllNotes() {
 }
 
 // POST /notes
-async function CreateNote() {
+async function HandleCreateNote() {
     console.log("Submitting Data...");
     let title = document.getElementById("title");
     let body = document.getElementById("body");
@@ -139,7 +134,7 @@ async function CreateNote() {
     //location.reload();
 
     RefreshNotes();
-    ClearForms();
+    ClearCreateForm();
 }
 
 
@@ -204,7 +199,6 @@ function CreateNoteElement(title, body, author, date, colour, id) {
 }
 
 
-
 //Handle Theme Selecetion Cookie
 const setCookie = (name, value, days = 7, path = '/') => {
     const expires = new Date(Date.now() + days * 864e5).toUTCString()
@@ -245,7 +239,6 @@ function CheckTheme() {
 }
 
 
-
 //Refresh notes when data changes
 function RefreshNotes(tags = null) {
     console.log("tag"+tags);
@@ -262,20 +255,16 @@ function RefreshNotes(tags = null) {
     }
 }
 
+//Clear create form, hide dialog
+function ClearCreateForm() {
+    let form = document.getElementById("create-form");
 
-function ClearForms() {
-    let forms = document.getElementsByTagName("form");
-
-    for (let i = 0; i < forms.length; i++) {
-        forms[i].reset();
-    }
+    form.reset();
 
     document.getElementById("create-modal-toggle").click();
 }
 
-
-
-
+//Fetch Notes by tag
 async function FetchNotesByTag(tag) {
 
     tag = tag.trim();

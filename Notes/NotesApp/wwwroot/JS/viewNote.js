@@ -1,28 +1,22 @@
 ﻿//JS Dedicated to handeling the View, Update, and Delete
 //functions of this app
 
-
-
-
-
-
 //Init page
 let noteId;
 
 
-function Init() {
+function InitViewNote() {
     let saveButton = document.getElementById("save-button");
     saveButton.addEventListener("click", (e) => {
-        //e.preventDefault();
-        console.log("SUBMIT TRIGGERED");
-        UpdatedNote();
+        console.log("Save Clicked");
+        HandleUpdatedNote();
     });
 
     let deleteButton = document.getElementById("delete-button");
     deleteButton.addEventListener("click", (e) => {
         //e.preventDefault();
-        console.log("SUBMIT TRIGGERED");
-        DeleteNote();
+        console.log("Delete Clicked");
+        HandleDeleteNote();
     });
 
     let shareButton = document.getElementById("share-button");
@@ -36,15 +30,14 @@ function Init() {
     const urlParams = new URLSearchParams(window.location.search);
     noteId = urlParams.get('id');
 
-
     if (noteId != null) {
         GetNote(noteId);
     }
+    window.history.pushState(null, null, "/");
 }
     
 
-
-
+//Get note data by ID
 async function GetNote(id) {
 
     let url = "/notes/" + id;
@@ -94,7 +87,7 @@ async function GetNote(id) {
     BuildNote(note.title, note.body, note.author, formattedDate, note.colour, note.tags);
 }
 
-
+//Populate View form elements with note data
 function BuildNote(title, body, author, date, colour, tags) {
 
     document.getElementById("view-modal-toggle").click();
@@ -117,7 +110,8 @@ function BuildNote(title, body, author, date, colour, tags) {
 
 }
 
-async function DeleteNote() {
+//Handle Delete note request
+async function HandleDeleteNote() {
     let url = "/notes/delete/" + noteId;
 
     let sub = await fetch(url, {
@@ -134,17 +128,20 @@ async function DeleteNote() {
 
 }
 
-
-async function UpdatedNote() {
+//Handle Update Note Request
+async function HandleUpdatedNote() {
     console.log("Submitting Data...");
     let title = document.getElementById("view-title");
     let body = document.getElementById("view-body");
+    let tagList = document.getElementById("view-tags").value.split(',');
 
     //let colour = document.querySelector('input[name = colour]:checked');
 
     const data = {
         title: title.value,
-        body: body.value.trim()
+        body: body.value.trim(),
+        tags: tagList,
+        colour: ""
     };
 
 
@@ -174,7 +171,7 @@ async function UpdatedNote() {
 
 }
 
-
+// Clear View Form, Close Dialoge, Refresh all notes
 function ClearViewForm() {
     let form = document.getElementById("view-form");
 
@@ -185,6 +182,7 @@ function ClearViewForm() {
     RefreshNotes();
 }
 
+//Copy URL that links to note
 function ShareNote() {
 
     let url = window.location.href;
